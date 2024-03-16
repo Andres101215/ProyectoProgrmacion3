@@ -33,8 +33,7 @@ public class DAO_Afiliado {
 
     public Document Read(){
         FindIterable<Document> documentos = collection.find();
-        for (Document documento : documentos) {
-            System.out.println(documento.toJson());
-        }
+
+        return (Document) documentos;
     }
 }

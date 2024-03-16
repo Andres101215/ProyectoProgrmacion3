@@ -4,6 +4,7 @@ import java.io.*;
 
 import Persistence.DAO_Afiliado;
 import Persistence.DAO_DisciplinaDeportiva;
+import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -26,12 +27,8 @@ public class HelloServlet extends HttpServlet {
 
         Gson gson = new Gson();
 
-        int id = Integer.parseInt( request.getParameter("id"));
-
-        Book book = bookService.findById( id );
-
-        if( book != null ) {
-            response.getWriter().write(gson.toJson(book));
+        if( afiliado.Read() != null ) {
+            response.getWriter().write(gson.toJson(afiliado.Read()));
         }else{
             response.getWriter().write(gson.toJson(null));
         }

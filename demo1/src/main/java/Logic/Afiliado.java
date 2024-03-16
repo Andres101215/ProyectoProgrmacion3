@@ -17,7 +17,6 @@ public class Afiliado {
 
     private DisciplinaDeportiva disciplinaDeportiva;
 
-
     public Afiliado() {
     }
 
