@@ -1,7 +1,6 @@
 package Servlets;
 
 import java.io.*;
-
 import Persistence.DAO_Afiliado;
 import Persistence.DAO_DisciplinaDeportiva;
 import com.google.gson.Gson;
@@ -9,17 +8,17 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-@WebServlet(name = "helloServlet", value = "/hello-servlet")
-public class HelloServlet extends HttpServlet {
+@WebServlet(name = "ServletAfiliado", value = "/afiliado-servlet")
+public class ServletAfiliado extends HttpServlet {
 
     private DAO_Afiliado afiliado;
-    private DAO_DisciplinaDeportiva disciplinaDeportiva;
+    private DAO_DisciplinaDeportiva disciplina;
 
     @Override
     public void init() throws ServletException {
         super.init();
         afiliado= new DAO_Afiliado();
-        disciplinaDeportiva = new DAO_DisciplinaDeportiva();
+        disciplina= new DAO_DisciplinaDeportiva();
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -44,7 +43,8 @@ public class HelloServlet extends HttpServlet {
          String direccion=request.getParameter("direccion");
          String telefono=request.getParameter("telefono");
          String correo=request.getParameter("correo");
+         String idDisciplina= request.getParameter("idDisciplina");
 
-
+         afiliado.Create(id,nombre,apellido,documento,edad,genero,direccion,telefono,correo,disciplina.find(idDisciplina));
     }
 }
