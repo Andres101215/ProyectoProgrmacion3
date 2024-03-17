@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
+import org.bson.types.ObjectId;
 
 @WebServlet(name = "ServletDisciplina", value = "/disciplina-servlet")
 public class ServletDisciplina extends HttpServlet {
@@ -40,6 +41,6 @@ public class ServletDisciplina extends HttpServlet {
        String id=request.getParameter("idDisciplina1");
        String nombre=request.getParameter("disciplina");
 
-       disciplina.Create(id,nombre,new ArrayList<Afiliado>(),new ArrayList<Evento>());
+       disciplina.Create(id,nombre,new ArrayList<ObjectId>(),new ArrayList<Evento>());
     }
 }

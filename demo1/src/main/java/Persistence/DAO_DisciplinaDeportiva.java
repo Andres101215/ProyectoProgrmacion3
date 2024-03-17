@@ -22,7 +22,7 @@ public class DAO_DisciplinaDeportiva {
         collection = service.getDataBase().getCollection("DisciplinasDeportivas");
     }
 
-    public void Create(String id, String disciplina, List<Afiliado> miembros, List<Evento> eventos) {
+    public void Create(String id, String disciplina, List<ObjectId> miembros, List<Evento> eventos) {
         Document document= new Document();
         document.append("id",id);
         document.append("disciplina",disciplina);

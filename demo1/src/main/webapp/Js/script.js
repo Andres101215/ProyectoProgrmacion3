@@ -41,7 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         xhr.send(null)
 
-document.querySelector("#registrar").addEventListener("click", function () {
+        document.querySelector("#registrar").addEventListener("click", function () {
+            event.preventDefault();
             const nombre = document.querySelector("#nombre").value
             const apellido = document.querySelector("#apellido").value
             const documento = document.querySelector("#documento").value
@@ -59,9 +60,10 @@ document.querySelector("#registrar").addEventListener("click", function () {
             const data = `nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}`;
 
             xhr.send(data);
+
             afiliadosTable.style.display = "table";
             formAfi.style.display = "none";
-            crearAfiliado.style.display = "block";
+            btnFlotante.style.display = "block";
         });
     });
     afiliadostabla.style.display="block";
@@ -133,5 +135,3 @@ function fillTable(afiliados) {
     const table = document.querySelector("#afiliados-table");
     table.style.display = "block";
 }
-
-
