@@ -7,7 +7,6 @@ import com.mongodb.client.MongoDatabase;
 
 public class Service {
 
-
     private String uri;
     private MongoClient mongoClient;
 

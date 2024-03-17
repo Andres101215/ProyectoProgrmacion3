@@ -5,15 +5,162 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="menu.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
-    <title>Proyecto Programacion</title>
+    <title>SportsEventsHub</title>
 </head>
-<body>
-<h1>hola bienvenido a este nuevo proyecto</h1>
+<body style="background-color: rgba(184,231,220,0.2)">
+<header>
+    <img id="logo" src="sportslogo.png" alt="Logo de SportsEventsHub">
+    <nav>
+        <ul>
+            <li><a href="#" id="afiliados-link">Afiliados</a></li>
+            <li><a href="#" id="disciplinas-link">Disciplinas</a></li>
+            <li><a href="#" id="acercade-link">Acerca de</a></li>
+        </ul>
+    </nav>
+</header>
+<main id="main-content">
+
+    <div id="texto-div">
+        <h2 style="font-size: 40px; color: #3542B3" >Bienvenido a</h2>
+        <h1 style="right: 100px; font-size: 60px;color: #F5CD5D">SportsEventsHub</h1>
+    </div>
+
+</main>
+
+<div class="container">
+    <img id="marca" src="sportslogo.png" alt="Marca de Agua">
+</div>
+
+
+<div class="container" id="afiliadostabla">
+
+    <div style="position: relative;">
+        <table id="afiliados-table" class="table table-striped" style="display: none;">
+            <thead >
+            <tr>
+                <th colspan="11" style="text-align: center;"><b>Lista de Afiliados</b></th>
+            </tr>
+            <tr>
+                <th><b>ID</b></th>
+                <th><b>Nombre</b></th>
+                <th><b>Apellido</b></th>
+                <th><b>Documento</b></th>
+                <th><b>Edad</b></th>
+                <th><b>Género</b></th>
+                <th><b>Dirección</b></th>
+                <th><b>Teléfono</b></th>
+                <th><b>Correo</b></th>
+                <th><b>Disciplina</b></th>
+                <th><b>Opciones</b></th>
+            </tr>
+
+
+            </thead>
+            <tbody>
+            <tr></tr>
+            </tbody>
+        </table>
+
+        <button id="crearAfiliado" class="botón-flotante">+</button>
+    </div>
+    <div id="formAfi" > <h1 class="md-4">Registro Afiliados</h1>
+
+        <form class="row g-3 needs-validation" novalidate>
+            <div class="col-lg-1 ">
+                <label for="nombre" class="col-form-label">Nombre</label>
+            </div>
+            <div class="col-lg-5 ">
+                <input type="text" id="nombre" class="form-control" placeholder="Ingrese el nombre" required> </input>
+            </div>
+            <div class="invalid-feedback">
+                Por favor, completa este campo.
+            </div>
+            <div class="col-lg-1">
+                <label for="apellido" class="col-form-label">Apellido</label>
+            </div>
+            <div class="col-lg-5">
+                <input type="text" id="apellido" class="form-control" placeholder="Ingrese el apellido" required>
+
+            </div>
+            <div class="invalid-feedback">
+                Por favor, completa este campo.
+            </div>
+            <div class="col-lg-2">
+                <label for="documento" class="col-form-label">Documento</label>
+            </div>
+            <div class="col-lg-10">
+                <input type="number" id="documento" class="form-control" required>
+            </div>
+            <div class="invalid-feedback">
+                Por favor, completa este campo.
+            </div>
+            <div class="col-lg-1">
+                <label for="edad" class="col-form-label">Edad</label>
+            </div>
+            <div class="col-lg-11">
+                <input type="number" id="edad" class="form-control"  required> </input>
+            </div>
+            <div class="invalid-feedback">
+                Por favor, completa este campo.
+            </div>
+            <div class="col-lg-2">
+                <label for="genero" class="col-form-label">Genero</label>
+            </div>
+            <div class="col-lg-10">
+                <select class="form-select" id="genero" required>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+            <div class="col-lg-1">
+                <label for="direccion" class="col-form-label">Direccion</label>
+            </div>
+            <div class="col-lg-11">
+                <input type="text" id="direccion" class="form-control"  required> </input>
+            </div>
+            <div class="invalid-feedback">
+                Por favor, completa este campo.
+            </div>
+
+            <div class="col-lg-1">
+                <label for="telefono" class="col-form-label">Telefono</label>
+            </div>
+            <div class="col-lg-11">
+                <input type="number" id="telefono" class="form-control"  required> </input>
+            </div>
+            <div class="invalid-feedback">
+                Por favor, completa este campo.
+            </div>
+            <div class="col-lg-1">
+                <label for="correo" class="col-form-label">Correo</label>
+            </div>
+            <div class="col-lg-11">
+                <input type="text" id="correo" class="form-control"  required> </input>
+            </div>
+            <div class="invalid-feedback">
+                Por favor, completa este campo.
+            </div>
+
+            <div class="col-lg-2">
+                <label for="idDisciplina" class="col-form-label">Disciplina Deportiva</label>
+            </div>
+            <div class="col-lg-10">
+                <select class="form-select" id="idDisciplina" required>
+                    <option value="">Seleccione una discplina</option>
+                </select>
+            </div>
+            <div class="col-lg-12">
+                <input type="submit" id="registrar" class="btn btn-primary" >
+            </div>
+        </form></div>
+
+</div>
 
 <script src="Js/script.js"></script>
-
 </body>
 </html>
