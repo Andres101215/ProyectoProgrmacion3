@@ -1,7 +1,7 @@
 body{
 
     margin: 0;
-    gap: 30px;
+
 }
 
 header {
@@ -94,23 +94,13 @@ nav ul li a:hover::after {
 #marca {
     position: fixed;
     align-self: center;
-    bottom: 50px;
+    bottom: 10%;
     right: 25%;
     width: 50%;
     opacity: 0.07;
     z-index: 1;
 }
 
-#texto-div {
-    position: fixed;
-    bottom: 50%;
-    right: 50%;
-    transform: translate(50%, 50%);
-    text-align: center;
-    color: #F5CD5D;
-    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
-    z-index: 2;
-}
 @keyframes slideDown {
     0% {
         transform: translateY(-100%);
@@ -122,10 +112,21 @@ nav ul li a:hover::after {
     }
 }
 
+#texto-div {
+    position: fixed;
+    bottom: 50%;
+    right: 50%;
+    transform: translate(50%, 50%);
+    text-align: center;
+    color: #F5CD5D;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    z-index: 2;
+
+}
+
 #afiliados-table {
-    margin-top: 10%;
-    margin-right: 10%;
-    display: none;
+
+
     animation: slideDown 1s ease forwards;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -134,7 +135,7 @@ nav ul li a:hover::after {
 #afiliados-table th,
 #afiliados-table td {
     min-width: 30px;
-    max-width: 150px;
+    max-width:80px;
 }
 
 .botón-flotante {

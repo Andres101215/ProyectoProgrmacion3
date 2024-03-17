@@ -83,7 +83,7 @@ document.getElementById("afiliados-link").addEventListener("click", function(eve
 
 
     if (afiliadosTable.style.display === "none") {
-        afiliadosTable.style.display = "block";
+        afiliadosTable.style.display = "table";
         crearAfiliado.style.display = "block";
         mainContent.style.display = "none";
         form.style.display="none";
