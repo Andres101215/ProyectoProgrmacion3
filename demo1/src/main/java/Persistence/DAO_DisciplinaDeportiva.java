@@ -48,7 +48,20 @@ public class DAO_DisciplinaDeportiva {
             return null;
         }
     }
-    public void update(String id, String disciplina, List<Afiliado> miembros, List<Evento> eventos) {
+
+    public void updateMiembros (String id,ObjectId objId){
+        Document document = collection.find(eq("id",id)).first();
+        Document document1 = new Document();
+        List<ObjectId> listaObjectId = (List<ObjectId>) document.get("miembros");
+        listaObjectId.add(objId);
+        document1.append("miembros",listaObjectId);
+        Document update = new Document("$set", document1);
+
+        collection.updateOne(document, update);
+
+    }
+
+    public void update(String id, String disciplina, List<ObjectId> miembros, List<Evento> eventos) {
         Document document1 = collection.find(eq("id", id)).first();
 
         Document document = new Document();
@@ -60,6 +73,7 @@ public class DAO_DisciplinaDeportiva {
 
         collection.updateOne(document1, update);
     }
+
     public void delete(String id){
         Document document1 = collection.find(eq("id", id)).first();
 
