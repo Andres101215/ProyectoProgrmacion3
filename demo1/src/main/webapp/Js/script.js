@@ -1,13 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("#crearAfiliado").addEventListener("click", function () {
         var formAfi = document.getElementById("formAfi");
-        var afiliadostabla = document.getElementById("afiliadostabla");
         var btnFlotante = document.getElementById("crearAfiliado");
         var afiliadosTable = document.getElementById("afiliados-table");
 
         afiliadosTable.style.display = "none";
         btnFlotante.style.display = "none";
-
 
         formAfi.style.display = "block";
 
@@ -19,8 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 if (xhr.responseText != 'null') {
                     const book = JSON.parse(xhr.responseText)
-
-                    console.log(book)
 
                     const selectElement = document.getElementById("idDisciplina");
 
@@ -66,7 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
             btnFlotante.style.display = "block";
         });
     });
-    afiliadostabla.style.display="block";
 });
 
 function clearMainContent() {
@@ -76,7 +71,7 @@ function clearMainContent() {
     }
 }
 
-document.getElementById("afiliados-link").addEventListener("click", function(event) {
+document.getElementById("afiliados-link").addEventListener("click", function (event) {
     event.preventDefault();
 
     var mainContent = document.getElementById("main-content");
@@ -84,54 +79,76 @@ document.getElementById("afiliados-link").addEventListener("click", function(eve
     var crearAfiliado = document.getElementById("crearAfiliado");
     var form = document.getElementById("formAfi");
 
-
     if (afiliadosTable.style.display === "none") {
         afiliadosTable.style.display = "table";
         crearAfiliado.style.display = "block";
         mainContent.style.display = "none";
-        form.style.display="none";
+        form.style.display = "none";
 
     }
 });
 
-//tabla de afiliados
-document.querySelector("#btn").addEventListener("click", () => {
-    const xhr = new XMLHttpRequest();
+document.querySelector("#afiliados-link").addEventListener("click", () => {
+        const xhr = new XMLHttpRequest();
 
-    xhr.open("GET", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
+        xhr.open("GET", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
 
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const response = xhr.responseText;
-            if (response !== 'null') {
-                const afiliados = JSON.parse(response);
-                fillTable(afiliados);
-            } else {
-                alert("No hay datos disponibles.");
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = xhr.responseText;
+                if (response !== 'null') {
+                    const afiliados = JSON.parse(response);
+
+                    res = document.querySelector("#res")
+                    res.innerHTML = ''
+
+                    afiliados.forEach(afiliado => {
+                        const objetoJSON = JSON.parse(afiliado);
+
+
+                        const xhr1 = new XMLHttpRequest()
+
+                        xhr1.open("POST", "http://localhost:8080/demo1_war_exploded/disciplina2-servlet", true);
+
+                        xhr1.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                        xhr1.onload = function() {
+                            if (xhr1.status >= 200 && xhr1.status < 300) {
+
+                                const response1 = JSON.parse(xhr1.responseText);
+                                console.log(response1);
+                            } else {
+                                console.error('Error al obtener la disciplina:', xhr1.statusText);
+                            }
+                        };
+
+                        xhr1.onerror = function() {
+                            console.error('Error de red al realizar la solicitud.');
+                        };
+
+                        const data1 = `idDisciplina=${objetoJSON.Disciplina.$oid}`;
+
+                        xhr1.send(data1);
+
+                        res.innerHTML += `<tr>
+                          <td>${objetoJSON.id}</td>
+                          <td>${objetoJSON.nombre}</td>
+                          <td>${objetoJSON.apellido}</td>
+                          <td>${objetoJSON.documento}</td>
+                           <td>${objetoJSON.correo}</td>
+                          <td>${objetoJSON.edad}</td>
+                          <td>${objetoJSON.telefono}</td>
+                          <td>${objetoJSON.genero}</td>
+                          <td>${objetoJSON.direccion}</td>
+                          <td>${objetoJSON.Disciplina.$oid}</td>
+                          <td><button type="button" class="btn btn-outline-primary" id="formEdit">Editar</button></td>
+                        </tr>`
+                    });
+                }
             }
         }
-    };
+        ;
 
-    xhr.send(null);
-});
-//lenar tabla
-function fillTable(afiliados) {
-    const tableBody = document.querySelector("#afiliados-table tbody");
-    tableBody.innerHTML = "";
-
-    afiliados.forEach(afiliado => {
-        const row = document.createElement("tr");
-
-        const properties = ["id", "nombre", "apellido", "documento", "edad", "genero", "direccion", "telefono", "correo", "disciplina"];
-        properties.forEach(property => {
-            const cell = document.createElement("td");
-            cell.textContent = afiliado[property];
-            row.appendChild(cell);
-        });
-
-        tableBody.appendChild(row);
-    });
-
-    const table = document.querySelector("#afiliados-table");
-    table.style.display = "block";
-}
+        xhr.send(null);
+    }
+);

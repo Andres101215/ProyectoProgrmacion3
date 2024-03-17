@@ -49,6 +49,12 @@ public class DAO_DisciplinaDeportiva {
         }
     }
 
+    public String returnObject (String id){
+        Document document = collection.find(eq("_id",id)).first();
+        return document.toJson();
+    }
+
+
     public void updateMiembros (String id,ObjectId objId){
         Document document = collection.find(eq("id",id)).first();
         Document document1 = new Document();

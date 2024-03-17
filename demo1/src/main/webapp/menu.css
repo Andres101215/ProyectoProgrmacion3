@@ -1,5 +1,7 @@
 body{
+
     margin: 0;
+
 }
 
 header {
@@ -18,6 +20,7 @@ header {
 
 nav {
     display: flex;
+
 }
 
 nav ul {
@@ -87,6 +90,7 @@ nav ul li a:hover::after {
     margin-left: 10px;
 }
 
+
 #marca {
     position: fixed;
     align-self: center;
@@ -96,7 +100,6 @@ nav ul li a:hover::after {
     opacity: 0.07;
     z-index: 1;
 }
-
 
 @keyframes slideDown {
     0% {
@@ -112,13 +115,14 @@ nav ul li a:hover::after {
 #texto-div {
 
     position: fixed;
-    bottom: 50%;
-    right: 50%;
-    transform: translate(50%, 50%);
+    bottom: 35%;
+    left: 50%;
+    transform: translateX(-50%);
     text-align: center;
     color: #F5CD5D;
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
     z-index: 2;
+    animation: slideUp 1s ease forwards;
 
 }
 
@@ -135,25 +139,28 @@ nav ul li a:hover::after {
     max-width:100px;
 }
 
-#crearAfiliado{
+#crearAfiliado {
     position: fixed;
     top: 50%;
+    right: 0;
     transform: translateY(-50%);
-    right: 10px;
     background-color: #5066B3;
     color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 6px;
     font-size: 24px;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 10px 0 0 10px;
     transition: background-color 0.3s;
     animation: slideDown 1s ease forwards;
-    display: none;
+    display: flex;
+    align-items: center;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
 }
-
 #crearAfiliado:hover {
-    background-color: rgba(245, 205, 93, 0.42);
+    background-color: #F5CD5D;
+    color: #5066B3;
 }
 
 #formAfi{
@@ -161,4 +168,13 @@ nav ul li a:hover::after {
     display: none;
     animation: slideDown 1s ease forwards;
 
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translate(-50%, 100%);
+    }
+    100% {
+        transform: translate(-50%, 0);
+    }
 }
