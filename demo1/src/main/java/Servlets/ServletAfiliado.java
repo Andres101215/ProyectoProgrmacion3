@@ -48,6 +48,6 @@ public class ServletAfiliado extends HttpServlet {
 
          afiliado.Create(id,nombre,apellido,documento,edad,genero,direccion,telefono,correo,disciplina.find(idDisciplina));
 
-         disciplina.updateMiembros(idDisciplina,afiliado.find(id));
+        disciplina.updateMiembros(idDisciplina,afiliado.find(id));
     }
 }

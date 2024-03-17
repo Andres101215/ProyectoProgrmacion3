@@ -178,3 +178,9 @@ nav ul li a:hover::after {
         transform: translate(-50%, 0);
     }
 }
+#editForm{
+    margin-top: 10%;
+    display: none;
+    animation: slideDown 1s ease forwards;
+
+}

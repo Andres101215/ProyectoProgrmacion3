@@ -84,36 +84,37 @@ document.getElementById("afiliados-link").addEventListener("click", function (ev
         crearAfiliado.style.display = "block";
         mainContent.style.display = "none";
         form.style.display = "none";
-
     }
 });
 
 
-document.querySelector("#afiliados-link").addEventListener("click", () => {
-    const xhr = new XMLHttpRequest();
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("#afiliados-link").addEventListener("click", () => {
+        document.getElementById("editForm").style.display = "none"
+        const xhr = new XMLHttpRequest();
 
-    xhr.open("GET", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
+        xhr.open("GET", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
 
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const response = xhr.responseText;
-            if (response !== 'null') {
-                const afiliados = JSON.parse(response);
-                res = document.querySelector("#res")
-                res.innerHTML = '';
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = xhr.responseText;
+                if (response !== 'null') {
+                    const afiliados = JSON.parse(response);
 
-                afiliados.forEach(afiliado => {
-                    const objetoJSON = JSON.parse(afiliado);
-                    const data1 = `idDisciplina=${objetoJSON.Disciplina.$oid}`;
+                    afiliados.forEach(afiliado => {
+                        res = document.querySelector("#res")
+                        res.innerHTML = '';
+                        const objetoJSON = JSON.parse(afiliado);
+                        const data1 = `idDisciplina=${objetoJSON.Disciplina.$oid}`;
 
-                    realizarSolicitudAjax(data1, (error, response) => {
-                        if (error) {
-                            console.error(error);
-                            return; // Salir si hay un error
-                        }
-                        const objetoJSON1 = JSON.parse(response);
+                        realizarSolicitudAjax(data1, (error, response) => {
+                            if (error) {
+                                console.error(error);
+                                return; // Salir si hay un error
+                            }
+                            const objetoJSON1 = JSON.parse(response);
 
-                        res.innerHTML += `<tr>
+                            res.innerHTML += `<tr>
                             <td>${objetoJSON.id}</td>
                             <td>${objetoJSON.nombre}</td>
                             <td>${objetoJSON.apellido}</td>
@@ -126,14 +127,16 @@ document.querySelector("#afiliados-link").addEventListener("click", () => {
                             <td>${objetoJSON1.disciplina}</td>
                             <td><button type="button" class="btn btn-outline-primary" id="formEdit">Editar</button></td>
                         </tr>`;
+                        });
                     });
-                });
+                }
             }
-        }
-    };
+        };
 
-    xhr.send(null);
+        xhr.send(null);
+    });
 });
+
 function realizarSolicitudAjax(data, callback) {
     const xhr = new XMLHttpRequest();
 
@@ -154,4 +157,62 @@ function realizarSolicitudAjax(data, callback) {
     };
 
     xhr.send(data);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("afiliados-table").addEventListener("click", function (event) {
+        if (event.target && event.target.id === "formEdit") {
+            var filaAfiliado = event.target.closest("tr");
+            var idAfiliado = filaAfiliado.querySelector("td:first-child").innerText;
+            var nombreAfiliado = filaAfiliado.querySelector("td:nth-child(2)").innerText;
+            var apellidoAfiliado = filaAfiliado.querySelector("td:nth-child(3)").innerText;
+            var documentoAfiliado = filaAfiliado.querySelector("td:nth-child(4)").innerText;
+            var correoAfiliado = filaAfiliado.querySelector("td:nth-child(5)").innerText;
+            var edadAfiliado = filaAfiliado.querySelector("td:nth-child(6)").innerText;
+            var telefonoAfiliado = filaAfiliado.querySelector("td:nth-child(7)").innerText;
+            var generoAfiliado = filaAfiliado.querySelector("td:nth-child(8)").innerText;
+            var direccionAfiliado = filaAfiliado.querySelector("td:nth-child(9)").innerText;
+            var disciplinaAfiliado = filaAfiliado.querySelector("td:nth-child(10)").innerText;
+
+            document.getElementById("editForm").style.display = "block";
+            document.getElementById("afiliados-table").style.display = "none";
+            document.getElementById("crearAfiliado").style.display = "none";
+
+            document.getElementById("editNombre").value = nombreAfiliado;
+            document.getElementById("editApellido").value = apellidoAfiliado;
+            document.getElementById("editDocumento").value = documentoAfiliado;
+            document.getElementById("editCorreo").value = correoAfiliado;
+            document.getElementById("editEdad").value = edadAfiliado;
+            document.getElementById("editTelefono").value = telefonoAfiliado;
+            document.getElementById("editGenero").value = generoAfiliado;
+            document.getElementById("editDireccion").value = direccionAfiliado;
+            document.getElementById("editIdDisciplina").value = disciplinaAfiliado;
+
+            event.preventDefault();
+        }
+    });
+
+    document.getElementById("editForm").addEventListener("click", function (event) {
+        if (event.target && event.target.classList.contains("formDelete")) {
+            console.log("Se ha presionado el botón 'Eliminar Afiliado' en el formulario de edición");
+        }
+    });
+
+    document.getElementById("editForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (event.target && event.target.id === "actualizar") {
+            console.log("Se ha presionado el botón 'Actualizar' en el formulario de edición");
+            alert("GAY");
+        }
+        console.log(event.target);
+    });
+});
+
+function confirmDelete() {
+    if (confirm("¿Estás seguro de que deseas eliminar este afiliado?")) {
+        console.log("Se ha confirmado la eliminación del afiliado");
+        document.getElementById("editForm").style.display = "none";
+        document.getElementById("afiliados-table").style.display = "table";
+        document.getElementById("crearAfiliado").style.display = "block";
+    }
 }

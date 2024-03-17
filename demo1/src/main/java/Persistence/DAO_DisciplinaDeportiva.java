@@ -63,7 +63,6 @@ public class DAO_DisciplinaDeportiva {
         Document update = new Document("$set", document1);
 
         collection.updateOne(document, update);
-
     }
 
     public void update(String id, String disciplina, List<ObjectId> miembros, List<Evento> eventos) {
