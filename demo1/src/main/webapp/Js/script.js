@@ -88,67 +88,70 @@ document.getElementById("afiliados-link").addEventListener("click", function (ev
     }
 });
 
+
 document.querySelector("#afiliados-link").addEventListener("click", () => {
-        const xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
 
-        xhr.open("GET", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
+    xhr.open("GET", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
 
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                const response = xhr.responseText;
-                if (response !== 'null') {
-                    const afiliados = JSON.parse(response);
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const response = xhr.responseText;
+            if (response !== 'null') {
+                const afiliados = JSON.parse(response);
+                res = document.querySelector("#res")
+                res.innerHTML = '';
 
-                    res = document.querySelector("#res")
-                    res.innerHTML = ''
+                afiliados.forEach(afiliado => {
+                    const objetoJSON = JSON.parse(afiliado);
+                    const data1 = `idDisciplina=${objetoJSON.Disciplina.$oid}`;
 
-                    afiliados.forEach(afiliado => {
-                        const objetoJSON = JSON.parse(afiliado);
-
-
-                        const xhr1 = new XMLHttpRequest()
-
-                        xhr1.open("POST", "http://localhost:8080/demo1_war_exploded/disciplina2-servlet", true);
-
-                        xhr1.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-                        xhr1.onload = function() {
-                            if (xhr1.status >= 200 && xhr1.status < 300) {
-
-                                const response1 = JSON.parse(xhr1.responseText);
-                                console.log(response1);
-                            } else {
-                                console.error('Error al obtener la disciplina:', xhr1.statusText);
-                            }
-                        };
-
-                        xhr1.onerror = function() {
-                            console.error('Error de red al realizar la solicitud.');
-                        };
-
-                        const data1 = `idDisciplina=${objetoJSON.Disciplina.$oid}`;
-
-                        xhr1.send(data1);
+                    realizarSolicitudAjax(data1, (error, response) => {
+                        if (error) {
+                            console.error(error);
+                            return; // Salir si hay un error
+                        }
+                        const objetoJSON1 = JSON.parse(response);
 
                         res.innerHTML += `<tr>
-                          <td>${objetoJSON.id}</td>
-                          <td>${objetoJSON.nombre}</td>
-                          <td>${objetoJSON.apellido}</td>
-                          <td>${objetoJSON.documento}</td>
-                           <td>${objetoJSON.correo}</td>
-                          <td>${objetoJSON.edad}</td>
-                          <td>${objetoJSON.telefono}</td>
-                          <td>${objetoJSON.genero}</td>
-                          <td>${objetoJSON.direccion}</td>
-                          <td>${objetoJSON.Disciplina.$oid}</td>
-                          <td><button type="button" class="btn btn-outline-primary" id="formEdit">Editar</button></td>
-                        </tr>`
+                            <td>${objetoJSON.id}</td>
+                            <td>${objetoJSON.nombre}</td>
+                            <td>${objetoJSON.apellido}</td>
+                            <td>${objetoJSON.documento}</td>
+                            <td>${objetoJSON.correo}</td>
+                            <td>${objetoJSON.edad}</td>
+                            <td>${objetoJSON.telefono}</td>
+                            <td>${objetoJSON.genero}</td>
+                            <td>${objetoJSON.direccion}</td>
+                            <td>${objetoJSON1.disciplina}</td>
+                            <td><button type="button" class="btn btn-outline-primary" id="formEdit">Editar</button></td>
+                        </tr>`;
                     });
-                }
+                });
             }
         }
-        ;
+    };
 
-        xhr.send(null);
-    }
-);
+    xhr.send(null);
+});
+function realizarSolicitudAjax(data, callback) {
+    const xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "http://localhost:8080/demo1_war_exploded/disciplina2-servlet", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            const response = JSON.parse(xhr.responseText);
+            callback(null, response);
+        } else {
+            callback('Error al realizar la solicitud: ' + xhr.statusText, null);
+        }
+    };
+
+    xhr.onerror = function () {
+        callback('Error de red al realizar la solicitud.', null);
+    };
+
+    xhr.send(data);
+}
