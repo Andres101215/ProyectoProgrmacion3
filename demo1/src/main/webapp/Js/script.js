@@ -8,8 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
         afiliadosTable.style.display = "none";
         btnFlotante.style.display = "none";
 
-        formAfi.style.display = "block";
 
+        formAfi.style.display = "block";
 
         const xhr = new XMLHttpRequest()
         xhr.open("GET", "http://localhost:8080/demo1_war_exploded/disciplina-servlet", true)
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         xhr.send(null)
 
-        document.querySelector("#registrar").addEventListener("click", function () {
+document.querySelector("#registrar").addEventListener("click", function () {
             const nombre = document.querySelector("#nombre").value
             const apellido = document.querySelector("#apellido").value
             const documento = document.querySelector("#documento").value
@@ -59,11 +59,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const data = `nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}`;
 
             xhr.send(data);
-
-          //  afiliadostabla.style.display="block";
-
+            afiliadosTable.style.display = "table";
+            formAfi.style.display = "none";
+            crearAfiliado.style.display = "block";
         });
     });
+    afiliadostabla.style.display="block";
 });
 
 function clearMainContent() {
@@ -90,6 +91,8 @@ document.getElementById("afiliados-link").addEventListener("click", function(eve
 
     }
 });
+
+//tabla de afiliados
 document.querySelector("#btn").addEventListener("click", () => {
     const xhr = new XMLHttpRequest();
 
@@ -109,7 +112,7 @@ document.querySelector("#btn").addEventListener("click", () => {
 
     xhr.send(null);
 });
-
+//lenar tabla
 function fillTable(afiliados) {
     const tableBody = document.querySelector("#afiliados-table tbody");
     tableBody.innerHTML = "";
@@ -130,3 +133,5 @@ function fillTable(afiliados) {
     const table = document.querySelector("#afiliados-table");
     table.style.display = "block";
 }
+
+
