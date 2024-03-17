@@ -2,11 +2,14 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("#crearAfiliado").addEventListener("click", function () {
         var formAfi = document.getElementById("formAfi");
         var afiliadostabla = document.getElementById("afiliadostabla");
+        var btnFlotante = document.getElementById("crearAfiliado");
+        var afiliadosTable = document.getElementById("afiliados-table");
 
-        if(formAfi.style.display = "block"){
-            afiliadostabla.style.display="none";
-        }
-        
+        afiliadosTable.style.display = "none";
+        btnFlotante.style.display = "none";
+
+
+        formAfi.style.display = "block";
 
         const xhr = new XMLHttpRequest()
         xhr.open("GET", "http://localhost:8080/demo1_war_exploded/disciplina-servlet", true)
@@ -74,11 +77,15 @@ document.getElementById("afiliados-link").addEventListener("click", function(eve
     var mainContent = document.getElementById("main-content");
     var afiliadosTable = document.getElementById("afiliados-table");
     var crearAfiliado = document.getElementById("crearAfiliado");
+    var form = document.getElementById("formAfi");
+
 
     if (afiliadosTable.style.display === "none") {
         afiliadosTable.style.display = "block";
         crearAfiliado.style.display = "block";
         mainContent.style.display = "none";
+        form.style.display="none";
+
     }
 });
 document.querySelector("#btn").addEventListener("click", () => {
