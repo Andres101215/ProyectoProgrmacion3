@@ -3,9 +3,10 @@ document.addEventListener("DOMContentLoaded", function () {
         var formAfi = document.getElementById("formAfi");
         var afiliadostabla = document.getElementById("afiliadostabla");
 
-        formAfi.style.display = "block";
-       // afiliadostabla.style.display="none";
-
+        if(formAfi.style.display = "block"){
+            afiliadostabla.style.display="none";
+        }
+        
 
         const xhr = new XMLHttpRequest()
         xhr.open("GET", "http://localhost:8080/demo1_war_exploded/disciplina-servlet", true)
@@ -55,11 +56,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const data = `nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}`;
 
             xhr.send(data);
-
-          //  afiliadostabla.style.display="block";
-
         });
     });
+    afiliadostabla.style.display="block";
 });
 
 function clearMainContent() {

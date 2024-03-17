@@ -137,7 +137,7 @@ nav ul li a:hover::after {
     max-width: 150px;
 }
 
-.botón-flotante {
+.crearAfiliado{
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
@@ -154,7 +154,7 @@ nav ul li a:hover::after {
     display: none;
 }
 
-.botón-flotante:hover {
+.crearAfiliado:hover {
     background-color: rgba(245, 205, 93, 0.42);
 }
 
