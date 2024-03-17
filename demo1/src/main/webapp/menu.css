@@ -158,6 +158,9 @@ nav ul li a:hover::after {
     background-color: rgba(245, 205, 93, 0.42);
 }
 
-#formAfi {
+#formAfi{
+    margin-top: 10%;
     display: none;
+    animation: slideDown 1s ease forwards;
+
 }
