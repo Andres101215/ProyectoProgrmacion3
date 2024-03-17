@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         xhr.send(null)
 
-        document.querySelector("#registrar").addEventListener("click", function () {
+document.querySelector("#registrar").addEventListener("click", function () {
             const nombre = document.querySelector("#nombre").value
             const apellido = document.querySelector("#apellido").value
             const documento = document.querySelector("#documento").value
@@ -59,6 +59,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const data = `nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}`;
 
             xhr.send(data);
+            afiliadosTable.style.display = "table";
+            formAfi.style.display = "none";
+            crearAfiliado.style.display = "block";
         });
     });
     afiliadostabla.style.display="block";
@@ -81,13 +84,15 @@ document.getElementById("afiliados-link").addEventListener("click", function(eve
 
 
     if (afiliadosTable.style.display === "none") {
-        afiliadosTable.style.display = "block";
+        afiliadosTable.style.display = "table";
         crearAfiliado.style.display = "block";
         mainContent.style.display = "none";
         form.style.display="none";
 
     }
 });
+
+//tabla de afiliados
 document.querySelector("#btn").addEventListener("click", () => {
     const xhr = new XMLHttpRequest();
 
@@ -107,7 +112,7 @@ document.querySelector("#btn").addEventListener("click", () => {
 
     xhr.send(null);
 });
-
+//lenar tabla
 function fillTable(afiliados) {
     const tableBody = document.querySelector("#afiliados-table tbody");
     tableBody.innerHTML = "";
@@ -128,3 +133,5 @@ function fillTable(afiliados) {
     const table = document.querySelector("#afiliados-table");
     table.style.display = "block";
 }
+
+

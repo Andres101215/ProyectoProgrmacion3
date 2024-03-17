@@ -1,6 +1,6 @@
 body{
     margin: 0;
-    gap: 30px;
+
 }
 
 header {
@@ -100,16 +100,6 @@ nav ul li a:hover::after {
     z-index: 1;
 }
 
-#texto-div {
-    position: fixed;
-    bottom: 50%;
-    right: 50%;
-    transform: translate(50%, 50%);
-    text-align: center;
-    color: #F5CD5D;
-    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
-    z-index: 2;
-}
 @keyframes slideDown {
     0% {
         transform: translateY(-100%);
@@ -121,14 +111,42 @@ nav ul li a:hover::after {
     }
 }
 
+#texto-div {
+
+    position: fixed;
+    bottom: 50%;
+    right: 50%;
+    transform: translate(50%, 50%);
+    text-align: center;
+    color: #F5CD5D;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+    z-index: 2;
+
+}
+
 #afiliados-table {
+<<<<<<< HEAD
     display: none;
+=======
+
+
+>>>>>>> 61797b3d59470bcd6df1897de72573eed94f899c
     animation: slideDown 1s ease forwards;
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
 
+<<<<<<< HEAD
 .crearAfiliado{
+=======
+#afiliados-table th,
+#afiliados-table td {
+    min-width: 30px;
+    max-width:100px;
+}
+
+#crearAfiliado{
+>>>>>>> 61797b3d59470bcd6df1897de72573eed94f899c
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
@@ -145,7 +163,7 @@ nav ul li a:hover::after {
     display: none;
 }
 
-.crearAfiliado:hover {
+#crearAfiliado:hover {
     background-color: rgba(245, 205, 93, 0.42);
 }
 
