@@ -1,7 +1,5 @@
 body{
-
     margin: 0;
-
 }
 
 header {
@@ -183,4 +181,91 @@ nav ul li a:hover::after {
     display: none;
     animation: slideDown 1s ease forwards;
 
+}
+
+
+#disciplinas-table{
+
+    display: none;
+    animation: slideDown 1s ease forwards;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+#disciplinas-table th,
+#disciplinas-table td {
+    min-width: 170px;
+    max-width: 200px;
+    text-align: center;
+}
+
+#disciplinas-table th:nth-child(2),
+#disciplinas-table td:nth-child(2) {
+    width: 20%;
+}
+
+#disciplinas-table th:nth-child(3),
+#disciplinas-table td:nth-child(3) {
+    width: 30%;
+}
+
+#disciplinas-table th:nth-child(1),
+#disciplinas-table th:nth-child(4),
+#disciplinas-table td:nth-child(1),
+#disciplinas-table td:nth-child(4) {
+    width: 10%;
+}
+
+#crearDisciplina {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background-color: #5066B3;
+    color: #fff;
+    border: none;
+    padding: 10px 6px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 10px 0 0 10px;
+    transition: background-color 0.3s;
+    animation: slideDown 1s ease forwards;
+    display: flex;
+    align-items: center;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+}
+#crearDisciplina:hover {
+    background-color: #F5CD5D;
+    color: #5066B3;
+}
+
+
+.modal {
+    animation: slideDown 1s ease forwards;
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+
+#formDisciplina {
+    text-align: center;
 }

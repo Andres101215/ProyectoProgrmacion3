@@ -232,6 +232,81 @@
         </form>
     </div>
 
+    <div class="table-responsive">
+        <table class="table" id="disciplinas-table" style="margin-top: 10% ">
+            <thead>
+            <tr>
+                <th colspan="4" class="text-center"><b>Tabla Disciplinas</b></th>
+            </tr>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Afiliados</th>
+                <th scope="col">Eventos/Puesto Obtenido</th>
+                <th scope="col">Opciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Fútbol</td>
+                <td>150</td>
+                <td>
+                </td>
+                <td>
+                    <button class="btn btn-primary">Editar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Baloncesto</td>
+                <td>100</td>
+                <td>
+
+                </td>
+                <td>
+                    <button class="btn btn-primary">Editar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Natación</td>
+                <td>800000000000000000000000000000000000000000000000000</td>
+                <td>
+                    un evento con su puesto obetnido:3
+                    otro evenyo con puesto obtenido:1
+                </td>
+                <td>
+                    <button class="btn btn-primary">Editar</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+    <button id="crearDisciplina" class="botón-flotante" style="display: none">Agregar Disciplina</button>
+
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div id="formDisciplina">
+                <h1 class="md-4">Registrar Disciplina</h1><br>
+                <form class="row g-3 needs-validation" novalidate>
+                    <div class="col-lg-6 ">
+                        <label for="nombre" class="col-form-label">Nombre de la Disciplina</label>
+                    </div>
+                    <div class="col-lg-5 ">
+                        <input type="text" id="NombreDisciplina" class="form-control" placeholder="Ingrese el nombre" required>
+                    </div>
+                    <div class="invalid-feedback">
+                        Por favor, completa este campo.
+                    </div>
+                    <br><input type="submit" id="agregarDisciplina" class="btn btn-primary" value="Guardar">
+
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 

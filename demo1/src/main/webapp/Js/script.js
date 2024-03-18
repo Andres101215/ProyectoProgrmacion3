@@ -84,6 +84,8 @@ document.getElementById("afiliados-link").addEventListener("click", function (ev
         crearAfiliado.style.display = "block";
         mainContent.style.display = "none";
         form.style.display = "none";
+        document.getElementById("disciplinas-table").style.display="none";
+        document.getElementById("crearDisciplina").style.display="none"
     }
 });
 
@@ -265,4 +267,54 @@ document.querySelector("#eliminar").addEventListener("click", () => {
             const data = `id=${idAfiliado}&nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}&stat=${"3"}`;
             xhr.send(data);
         }
+});
+
+
+//Tabla de Disciplinas
+document.addEventListener("DOMContentLoaded", function() {
+    var disciplinasLink = document.getElementById("disciplinas-link");
+
+    var disciplinasTable = document.getElementById("disciplinas-table");
+
+    disciplinasLink.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        disciplinasTable.style.display = "block";
+
+        document.getElementById("editForm").style.display="none";
+        var afiliadosTable = document.getElementById("afiliados-table");
+        afiliadosTable.style.display = "none";
+        document.getElementById("crearAfiliado").style.display="none";
+        document.getElementById("main-content").style.display="none";
+        document.getElementById("crearDisciplina").style.display="block";
+        document.getElementById("formAfi").style.display="none";
+
+
+    });
+});
+
+//agregar disciplina emergente
+var botonAgregarDisciplina = document.getElementById('crearDisciplina');
+var modal = document.getElementById('modal');
+
+botonAgregarDisciplina.addEventListener('click', function() {
+    modal.style.display = "block";
+});
+
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+var botonGuardar = document.getElementById('agregarDisciplina');
+
+botonGuardar.addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById("disciplinas-link").click();
+
+    // Aquí puedes agregar el código para guardar la disciplina
+    var modal = document.getElementById('modal');
+    modal.style.display = 'none';
 });
