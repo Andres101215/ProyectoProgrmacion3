@@ -20,6 +20,12 @@ public class DAO_Afiliado {
         collection = service.getDataBase().getCollection("Afiliados");
     }
 
+    public String returnObject(String id) {
+        ObjectId objectId = new ObjectId(id);
+        Document document = collection.find(eq("_id", objectId)).first();
+        return document != null ? document.toJson() : "{}";
+    }
+
     public void Create(String id, String nombre, String apellido, String documento, int edad, String genero, String direccion,
                        String telefono, String correo, ObjectId idDisciplina) {
         Document document = new Document();

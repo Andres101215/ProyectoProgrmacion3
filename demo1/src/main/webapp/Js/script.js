@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             xhr.open("POST", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            const data =`nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}&stat=${"1"}`;
+            const data = `nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}&stat=${"1"}`;
 
             xhr.send(data);
 
@@ -84,8 +84,8 @@ document.getElementById("afiliados-link").addEventListener("click", function (ev
         crearAfiliado.style.display = "block";
         mainContent.style.display = "none";
         form.style.display = "none";
-        document.getElementById("disciplinas-table").style.display="none";
-        document.getElementById("crearDisciplina").style.display="none"
+        document.getElementById("disciplinas-table").style.display = "none";
+        document.getElementById("crearDisciplina").style.display = "none"
     }
 });
 
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         res = document.querySelector("#res")
                         res.innerHTML = '';
                         const objetoJSON = JSON.parse(afiliado);
-                        const data1 =`idDisciplina=${objetoJSON.Disciplina.$oid}`;
+                        const data1 = `idDisciplina=${objetoJSON.Disciplina.$oid}`;
 
                         realizarSolicitudAjax(data1, (error, response) => {
                             if (error) {
@@ -228,16 +228,16 @@ document.addEventListener("DOMContentLoaded", function () {
 document.querySelector("#actualizar").addEventListener("click", () => {
     const xhr = new XMLHttpRequest()
 
-    idAfiliado=document.getElementById("editId").value
-    nombre=document.getElementById("editNombre").value
-    apellido=document.getElementById("editApellido").value
-    documento=document.getElementById("editDocumento").value
-    correo=document.getElementById("editCorreo").value
-    edad=document.getElementById("editEdad").value
-    telefono=document.getElementById("editTelefono").value
-    genero=document.getElementById("editGenero").value
-    direccion=document.getElementById("editDireccion").value
-    idDisciplina=document.getElementById("editIdDisciplina").value
+    idAfiliado = document.getElementById("editId").value
+    nombre = document.getElementById("editNombre").value
+    apellido = document.getElementById("editApellido").value
+    documento = document.getElementById("editDocumento").value
+    correo = document.getElementById("editCorreo").value
+    edad = document.getElementById("editEdad").value
+    telefono = document.getElementById("editTelefono").value
+    genero = document.getElementById("editGenero").value
+    direccion = document.getElementById("editDireccion").value
+    idDisciplina = document.getElementById("editIdDisciplina").value
 
     xhr.open("POST", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -247,62 +247,157 @@ document.querySelector("#actualizar").addEventListener("click", () => {
 });
 
 document.querySelector("#eliminar").addEventListener("click", () => {
-        if (confirm("¿Estás seguro de que deseas eliminar este afiliado?")) {
-            const xhr = new XMLHttpRequest()
+    if (confirm("¿Estás seguro de que deseas eliminar este afiliado?")) {
+        const xhr = new XMLHttpRequest()
 
-            idAfiliado=document.getElementById("editId").value
-            nombre=document.getElementById("editNombre").value
-            apellido=document.getElementById("editApellido").value
-            documento=document.getElementById("editDocumento").value
-            correo=document.getElementById("editCorreo").value
-            edad=document.getElementById("editEdad").value
-            telefono=document.getElementById("editTelefono").value
-            genero=document.getElementById("editGenero").value
-            direccion=document.getElementById("editDireccion").value
-            idDisciplina=document.getElementById("editIdDisciplina").value
+        idAfiliado = document.getElementById("editId").value
+        nombre = document.getElementById("editNombre").value
+        apellido = document.getElementById("editApellido").value
+        documento = document.getElementById("editDocumento").value
+        correo = document.getElementById("editCorreo").value
+        edad = document.getElementById("editEdad").value
+        telefono = document.getElementById("editTelefono").value
+        genero = document.getElementById("editGenero").value
+        direccion = document.getElementById("editDireccion").value
+        idDisciplina = document.getElementById("editIdDisciplina").value
 
-            xhr.open("POST", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            alert(idAfiliado)
-            const data = `id=${idAfiliado}&nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}&stat=${"3"}`;
-            xhr.send(data);
-        }
+        xhr.open("POST", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        alert(idAfiliado)
+        const data = `id=${idAfiliado}&nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}&stat=${"3"}`;
+        xhr.send(data);
+    }
 });
 
+document.querySelector("#disciplinas-link").addEventListener("click", function (event) {
+    event.preventDefault();
+
+    var mainContent = document.getElementById("main-content");
+    var disciplinastable = document.getElementById("disciplinas-table");
+    var crearDisciplina = document.getElementById("crearDisciplina");
+    var form = document.getElementById("formAfi");
+
+    if (disciplinastable.style.display === "none") {
+        disciplinastable.style.display = "table";
+        crearDisciplina.style.display = "block";
+        mainContent.style.display = "none";
+        form.style.display = "none";
+    }
+});
 
 //Tabla de Disciplinas
-document.addEventListener("DOMContentLoaded", function() {
-    var disciplinasLink = document.getElementById("disciplinas-link");
+document.addEventListener("DOMContentLoaded", function () {
 
-    var disciplinasTable = document.getElementById("disciplinas-table");
+    document.querySelector("#disciplinas-link").addEventListener("click", function (event) {
 
-    disciplinasLink.addEventListener("click", function(event) {
-        event.preventDefault();
+        const xhr = new XMLHttpRequest();
 
-        disciplinasTable.style.display = "block";
+        xhr.open("GET", "http://localhost:8080/demo1_war_exploded/disciplina-servlet", true);
 
-        document.getElementById("editForm").style.display="none";
-        var afiliadosTable = document.getElementById("afiliados-table");
-        afiliadosTable.style.display = "none";
-        document.getElementById("crearAfiliado").style.display="none";
-        document.getElementById("main-content").style.display="none";
-        document.getElementById("crearDisciplina").style.display="block";
-        document.getElementById("formAfi").style.display="none";
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = xhr.responseText;
+                if (response !== 'null') {
+                    const disciplinas = JSON.parse(response);
 
+                    disciplinas.forEach(disciplina => {
+                        res = document.querySelector("#dis")
+                        dis.innerHTML = '';
+                        const objetoJSON = JSON.parse(disciplina);
 
+                        const arraymiem = objetoJSON.miembros
+
+                        traermiembros(arraymiem)
+                            .then((miembros) => {
+                                res.innerHTML += `<tr>
+                            <td>${objetoJSON.id}</td>
+                            <td>${objetoJSON.disciplina}</td>
+                            <td>${miembros}</td>
+                            <td>${objetoJSON.miembros}</td>
+                            <td><button type="button" class="btn btn-outline-primary" id="formEdit">Editar</button></td>
+                        </tr>`;
+                            })
+
+                    });
+                }
+            }
+        };
+
+        xhr.send(null);
     });
 });
+
+function traermiembros(arraymiem) {
+    let promesas = []; // Array para almacenar todas las promesas de las solicitudes AJAX
+    let miem = ''; // Variable para almacenar el resultado final
+
+    arraymiem.forEach((objeto) => {
+        const data = `objectId=${objeto.$oid}`;
+        const promesa = new Promise((resolve, reject) => {
+            realizarSolicitudAjaxDisciplinas(data, (error, response) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    const objetoJSON1 = JSON.parse(response);
+                    resolve(`${objetoJSON1.nombre} ${objetoJSON1.apellido}`);
+                }
+            });
+        });
+        promesas.push(promesa);
+    });
+
+    // Esperar a que todas las promesas se resuelvan
+    return Promise.all(promesas)
+        .then((resultados) => {
+            miem = resultados.join('\n'); // Unir los resultados con saltos de línea
+            return miem; // Devolver el resultado final
+        })
+        .catch((error) => {
+            console.error('Error en una o más solicitudes AJAX:', error);
+        });
+}
+
+function realizarSolicitudAjaxDisciplinas(data, callback) {
+    const xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "http://localhost:8080/demo1_war_exploded/afiliado2-servlet", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            const response = JSON.parse(xhr.responseText);
+            callback(null, response);
+        } else {
+            callback('Error al realizar la solicitud: ' + xhr.statusText, null);
+        }
+    };
+
+    xhr.onerror = function () {
+        callback('Error de red al realizar la solicitud.', null);
+    };
+
+    xhr.send(data);
+}
+
 
 //agregar disciplina emergente
 var botonAgregarDisciplina = document.getElementById('crearDisciplina');
 var modal = document.getElementById('modal');
 
-botonAgregarDisciplina.addEventListener('click', function() {
+botonAgregarDisciplina.addEventListener('click', function () {
     modal.style.display = "block";
+    botonGuardar.addEventListener('click', function (event) {
+        event.preventDefault();
+        document.getElementById("disciplinas-link").click();
+
+        // Aquí puedes agregar el código para guardar la disciplina
+        var modal = document.getElementById('modal');
+        modal.style.display = 'none';
+    });
 });
 
 
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
@@ -310,11 +405,3 @@ window.onclick = function(event) {
 
 var botonGuardar = document.getElementById('agregarDisciplina');
 
-botonGuardar.addEventListener('click', function(event) {
-    event.preventDefault();
-    document.getElementById("disciplinas-link").click();
-
-    // Aquí puedes agregar el código para guardar la disciplina
-    var modal = document.getElementById('modal');
-    modal.style.display = 'none';
-});
