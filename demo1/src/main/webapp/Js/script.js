@@ -86,9 +86,11 @@ document.getElementById("afiliados-link").addEventListener("click", function (ev
         form.style.display = "none";
         document.getElementById("disciplinas-table").style.display = "none";
         document.getElementById("crearDisciplina").style.display = "none"
+        document.getElementById("formEditDisciplina").style.display = "none";
         document.getElementById("formEditDisciplina").style.display="none";
     }
 });
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -281,8 +283,9 @@ document.querySelector("#disciplinas-link").addEventListener("click", function (
         disciplinastable.style.display = "table";
         crearDisciplina.style.display = "block";
         mainContent.style.display = "none";
-        document.getElementById("crearAfiliado").style.display="none";
-        document.getElementById("afiliados-table").style.display="none";
+        document.getElementById("crearAfiliado").style.display = "none";
+        document.getElementById("afiliados-table").style.display = "none";
+        document.getElementById("formEditDisciplina").style.display = "none";
         document.getElementById("formEditDisciplina").style.display="none";
         form.style.display = "none";
     }
@@ -321,6 +324,18 @@ document.addEventListener("DOMContentLoaded", function () {
                         </tr>`;
                             })
 
+                    });
+                    dis.addEventListener('click', function (event) {
+                        if (event.target && event.target.classList.contains('btnDisciplina')) {
+                            const button = event.target;
+                            const row = button.parentNode.parentNode;
+                            const id = row.cells[0].innerText;
+                            const nombre = row.cells[1].innerText;
+                            document.getElementById("disciplina").value = nombre;
+                            document.getElementById("formEditDisciplina").style.display = "block";
+                            document.getElementById("disciplinas-table").style.display = "none";
+                            document.getElementById("crearDisciplina").style.display = "none";
+                        }
                     });
                 }
             }
@@ -416,28 +431,44 @@ window.onclick = function (event) {
 
 var botonGuardar = document.getElementById('agregarDisciplina');
 
-
 document.addEventListener("DOMContentLoaded", function () {
-    const editButtons = document.querySelectorAll('#disciplinas-table #btnDisciplina');
 
-    editButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const row = button.parentNode.parentNode;
+    document.getElementById("disciplinas-table").addEventListener("click", function (event) {
+        if (event.target && event.target.id === "btnDisciplina") {
+            var filaDisciplina = event.target.closest("tr");
+            var nombreDisciplina = filaDisciplina.querySelector("td:nth-child(2)").innerText;
 
-            const id = row.cells[0].innerText;
-            const nombre = row.cells[1].innerText;
-
-            document.getElementById("disciplina").value = nombre;
+            document.getElementById("disciplina").value = nombreDisciplina;
 
             document.getElementById("formEditDisciplina").style.display = "block";
             document.getElementById("disciplinas-table").style.display = "none";
             document.getElementById("crearDisciplina").style.display = "none";
-        });
+        }
     });
-
     document.getElementById('guardarEditDisciplina').addEventListener('click', function() {
         const nombreEvento = document.getElementById('eventos').value;
         const puestoEvento = document.getElementById('puesto').value;
+
+        const xhr = new XMLHttpRequest()
+
+        id = document.querySelector("#editIdDisc").value
+
+        xhr.open("POST", "http://localhost:8080/demo1_war_exploded/evento-servlet", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        const data = `nombre=${nombreEvento}&puesto=${puestoEvento}`;
+
+        xhr.send(data);
+
+
+        const xhr1 = new XMLHttpRequest()
+
+        id = document.querySelector("#editIdDisc").value
+
+        xhr.open("POST", "http://localhost:8080/demo1_war_exploded/disciplina-servlet", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        const data1 = `id=${id}&evento=${nombreEvento}&stat=${2}`;
+
+        xhr.send(data1);
 
         // Aquí puedes hacer lo que necesites con los datos del evento
         document.getElementById('camposEvento').style.display = 'none';
@@ -456,12 +487,11 @@ document.addEventListener("DOMContentLoaded", function () {
             camposEvento.style.display = 'none';
         }
     });
-
     document.getElementById('eliminarDisciplina').addEventListener('click', function() {
         if (confirm("¿Estás seguro de que deseas eliminar esta disciplina?")) {
             const xhr = new XMLHttpRequest()
 
-            id=document.querySelector("#editIdDisc").value
+            id = document.querySelector("#editIdDisc").value
 
             xhr.open("POST", "http://localhost:8080/demo1_war_exploded/disciplina-servlet", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -469,7 +499,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             xhr.send(data);
 
-            // Aquí puedes agregar la lógica para eliminar la disciplina
 
             document.getElementById('camposEvento').style.display = 'none';
             document.getElementById('eventos').value = "";
@@ -482,4 +511,22 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Eliminación cancelada.");
         }
     });
+});
+document.getElementById("acercade-link").addEventListener("click", function() {
+    var acercaDeFrame = document.getElementById("acercaDeFrame");
+
+    acercaDeFrame.style.display = "flex";
+    document.getElementById("formEditDisciplina").style.display = "none";
+    document.getElementById("disciplinas-table").style.display = "none";
+    document.getElementById("afiliados-table").style.display = "none";
+    document.getElementById("crearDisciplina").style.display = "none";
+    document.getElementById("main-content").style.display = "none";
+    document.getElementById("crearAfiliado").style.display = "none";
+    document.getElementById("crearDisciplina").style.display = "none";
+    document.getElementById("formAfi").style.display="none";
+    document.getElementById("formEditDisciplina").style.display="none";
+    document.getElementById("editForm").style.display="none";
+
+
+
 });

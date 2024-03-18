@@ -15,10 +15,10 @@ public class main {
         System.out.println(dao1.Read());
 
         ArrayList<ObjectId> obj=new ArrayList<ObjectId>();
-        ArrayList<Evento> even=new ArrayList<Evento>();
+        ArrayList<ObjectId> even=new ArrayList<ObjectId>();
         obj.add( new ObjectId("65f77ea36bcc6719607dd4c6"));
-        even.add(new Evento("123","Campeonato Nacional","1"));
-      dao1.Create("54421","Futbol",obj,even);
+
+        dao1.Create(dao1.generateId(),"Futbol",obj,even);
         //dao.Create("12345","Andres Felipe","Puentes Montaña","1002740222",20,"Maculino","Cra 18#2-87","3154350306","puentesmontanaandresfelipe@gmail.com",dao1.find("54421"));
 
 

@@ -24,7 +24,7 @@ public class DAO_DisciplinaDeportiva {
         collection = service.getDataBase().getCollection("DisciplinasDeportivas");
     }
 
-    public void Create(String id, String disciplina, List<ObjectId> miembros, List<Evento> eventos) {
+    public void Create(String id, String disciplina, List<ObjectId> miembros, List<ObjectId> eventos) {
         Document document= new Document();
         document.append("id",id);
         document.append("disciplina",disciplina);
@@ -49,6 +49,18 @@ public class DAO_DisciplinaDeportiva {
             return document.getString("id");
         } else {
             return null;
+        }
+    }
+    public void updateEventos(String id,ObjectId even){
+        Document document = collection.find(eq("id", id)).first();
+        if (document != null) {
+            Document document1 = new Document();
+            List<ObjectId> listaObjectId = (List<ObjectId>) document.get("eventos");
+            listaObjectId.add(even);
+            document1.append("eventos",listaObjectId);
+            Document update = new Document("$set", document1);
+
+            collection.updateOne(document, update);
         }
     }
 

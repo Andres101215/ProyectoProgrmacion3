@@ -275,3 +275,33 @@ nav ul li a:hover::after {
     display: none;
     animation: slideDown 1s ease forwards;
 }
+#acercaDeFrame {
+    animation: slideDown 1s ease forwards;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20%;
+}
+
+#sportsLogo {
+    max-width: 300px;
+    margin-right: 20px;
+
+;
+}
+
+#acercaDeTexto {
+    font-family: "Arial", sans-serif;
+    font-size: 18px;
+    text-align: justify;
+}
+
+#acercaDeTexto h2 {
+    font-weight: bold;
+    font-size: 24px;
+}
+#desarrolladoPor {
+    font-size: 14px;
+    font-style: italic;
+}
