@@ -17,7 +17,7 @@ public class main {
        //dao1.Create("54421","Ajedrez",new ArrayList<ObjectId>(),new ArrayList<Evento>());
         dao.Create("12345","Andres Felipe","Puentes Montaña","1002740222",20,"Maculino","Cra 18#2-87","3154350306","puentesmontanaandresfelipe@gmail.com",dao1.find("54421"));
 
-        //dao1.delete("54321");
+        //dao.delete("12345");
         //dao.update("12345", "Andres Felipe ", "Puentes Montaña", "1002740222", 20, "Maculino", "Cra 18#2-87", "3154350306", "puentesmontanaandresfelipe@gmail.com", dao1.find("54321"));
     }
 }

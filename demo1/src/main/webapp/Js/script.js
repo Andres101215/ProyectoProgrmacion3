@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             xhr.open("POST", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            const data = `nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}`;
+            const data =`nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}&stat=${"1"}`;
 
             xhr.send(data);
 
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         res = document.querySelector("#res")
                         res.innerHTML = '';
                         const objetoJSON = JSON.parse(afiliado);
-                        const data1 = `idDisciplina=${objetoJSON.Disciplina.$oid}`;
+                        const data1 =`idDisciplina=${objetoJSON.Disciplina.$oid}`;
 
                         realizarSolicitudAjax(data1, (error, response) => {
                             if (error) {
@@ -159,6 +159,7 @@ function realizarSolicitudAjax(data, callback) {
     xhr.send(data);
 }
 
+
 document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("afiliados-table").addEventListener("click", function (event) {
         if (event.target && event.target.id === "formEdit") {
@@ -178,6 +179,8 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("afiliados-table").style.display = "none";
             document.getElementById("crearAfiliado").style.display = "none";
 
+            document.getElementById("editId").value = idAfiliado;
+            document.getElementById("editId").readOnly = true;
             document.getElementById("editNombre").value = nombreAfiliado;
             document.getElementById("editApellido").value = apellidoAfiliado;
             document.getElementById("editDocumento").value = documentoAfiliado;
@@ -186,33 +189,80 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("editTelefono").value = telefonoAfiliado;
             document.getElementById("editGenero").value = generoAfiliado;
             document.getElementById("editDireccion").value = direccionAfiliado;
-            document.getElementById("editIdDisciplina").value = disciplinaAfiliado;
+            //document.getElementById("editIdDisciplina").value = disciplinaAfiliado;
 
+            const xhr = new XMLHttpRequest()
+            xhr.open("GET", "http://localhost:8080/demo1_war_exploded/disciplina-servlet", true)
+
+            xhr.onreadystatechange = () => {
+
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    if (xhr.responseText != 'null') {
+                        const book = JSON.parse(xhr.responseText)
+
+                        const selectElement = document.getElementById("editIdDisciplina");
+
+                        book.forEach((objeto) => {
+                            const objetoJSON = JSON.parse(objeto);
+
+                            const option = document.createElement("option");
+
+                            option.value = objetoJSON.id;
+
+                            option.textContent = objetoJSON.disciplina;
+
+                            selectElement.appendChild(option);
+
+                        });
+                    }
+                }
+            }
+            xhr.send(null)
             event.preventDefault();
         }
     });
-
-    document.getElementById("editForm").addEventListener("click", function (event) {
-        if (event.target && event.target.classList.contains("formDelete")) {
-            console.log("Se ha presionado el botón 'Eliminar Afiliado' en el formulario de edición");
-        }
-    });
-
-    document.getElementById("editForm").addEventListener("submit", function (event) {
-        event.preventDefault();
-        if (event.target && event.target.id === "actualizar") {
-            console.log("Se ha presionado el botón 'Actualizar' en el formulario de edición");
-            alert("GAY");
-        }
-        console.log(event.target);
-    });
 });
 
-function confirmDelete() {
-    if (confirm("¿Estás seguro de que deseas eliminar este afiliado?")) {
-        console.log("Se ha confirmado la eliminación del afiliado");
-        document.getElementById("editForm").style.display = "none";
-        document.getElementById("afiliados-table").style.display = "table";
-        document.getElementById("crearAfiliado").style.display = "block";
-    }
-}
+document.querySelector("#actualizar").addEventListener("click", () => {
+    const xhr = new XMLHttpRequest()
+
+    idAfiliado=document.getElementById("editId").value
+    nombre=document.getElementById("editNombre").value
+    apellido=document.getElementById("editApellido").value
+    documento=document.getElementById("editDocumento").value
+    correo=document.getElementById("editCorreo").value
+    edad=document.getElementById("editEdad").value
+    telefono=document.getElementById("editTelefono").value
+    genero=document.getElementById("editGenero").value
+    direccion=document.getElementById("editDireccion").value
+    idDisciplina=document.getElementById("editIdDisciplina").value
+
+    xhr.open("POST", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    const data = `id=${idAfiliado}&nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}&stat=${"2"}`;
+
+    xhr.send(data);
+});
+
+document.querySelector("#eliminar").addEventListener("click", () => {
+        if (confirm("¿Estás seguro de que deseas eliminar este afiliado?")) {
+            const xhr = new XMLHttpRequest()
+
+            idAfiliado=document.getElementById("editId").value
+            nombre=document.getElementById("editNombre").value
+            apellido=document.getElementById("editApellido").value
+            documento=document.getElementById("editDocumento").value
+            correo=document.getElementById("editCorreo").value
+            edad=document.getElementById("editEdad").value
+            telefono=document.getElementById("editTelefono").value
+            genero=document.getElementById("editGenero").value
+            direccion=document.getElementById("editDireccion").value
+            idDisciplina=document.getElementById("editIdDisciplina").value
+
+            xhr.open("POST", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            alert(idAfiliado)
+            const data = `id=${idAfiliado}&nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}&stat=${"3"}`;
+            xhr.send(data);
+        }
+});

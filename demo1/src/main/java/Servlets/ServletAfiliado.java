@@ -8,7 +8,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-
 @WebServlet(name = "ServletAfiliado", value = "/afiliado-servlet")
 public class ServletAfiliado extends HttpServlet {
 
@@ -45,9 +44,19 @@ public class ServletAfiliado extends HttpServlet {
          String telefono=request.getParameter("telefono");
          String correo=request.getParameter("correo");
          String idDisciplina= request.getParameter("idDisciplina");
+         String stat =request.getParameter("stat");
 
-         afiliado.Create(id,nombre,apellido,documento,edad,genero,direccion,telefono,correo,disciplina.find(idDisciplina));
-
-        disciplina.updateMiembros(idDisciplina,afiliado.find(id));
+         switch (stat){
+             case "1":
+                 afiliado.Create(id,nombre,apellido,documento,edad,genero,direccion,telefono,correo,disciplina.find(idDisciplina));
+                 break;
+             case "2":
+                 afiliado.update(id,nombre,apellido,documento,edad,genero,direccion,telefono,correo,disciplina.find(idDisciplina));
+                 break;
+             case "3":
+                 System.out.println("esta entrando");
+                 afiliado.delete(id);
+                 break;
+         }
     }
 }

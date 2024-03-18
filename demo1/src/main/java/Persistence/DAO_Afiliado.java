@@ -1,7 +1,5 @@
 package Persistence;
 
-import Logic.Afiliado;
-import Logic.DisciplinaDeportiva;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
@@ -77,6 +75,7 @@ public class DAO_Afiliado {
     }
     public void delete(String id){
         Document document1 = collection.find(eq("id", id)).first();
+        System.out.println("entra al metodo");
 
         collection.deleteOne(document1);
     }
