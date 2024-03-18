@@ -38,9 +38,22 @@ public class ServletDisciplina extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       String id=request.getParameter("idDisciplina1");
+       String id=request.getParameter("idDisciplina");
        String nombre=request.getParameter("disciplina");
+        String stat =request.getParameter("stat");
 
-       disciplina.Create(id,nombre,new ArrayList<ObjectId>(),new ArrayList<Evento>());
+        switch (stat){
+            case "1":
+                disciplina.Create(id,nombre,new ArrayList<ObjectId>(),new ArrayList<Evento>());
+                break;
+            case "2":
+
+                break;
+            case "3":
+                disciplina.delete(id);
+                break;
+        }
+
+
     }
 }

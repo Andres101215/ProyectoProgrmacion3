@@ -54,7 +54,6 @@ public class ServletAfiliado extends HttpServlet {
                  afiliado.update(id,nombre,apellido,documento,edad,genero,direccion,telefono,correo,disciplina.find(idDisciplina));
                  break;
              case "3":
-                 System.out.println("esta entrando");
                  afiliado.delete(id);
                  break;
          }

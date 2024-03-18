@@ -389,8 +389,16 @@ botonAgregarDisciplina.addEventListener('click', function () {
     botonGuardar.addEventListener('click', function (event) {
         event.preventDefault();
         document.getElementById("disciplinas-link").click();
+        var modal = document.querySelector("#NombreDisciplina").value
 
-        // Aquí puedes agregar el código para guardar la disciplina
+        const xhr = new XMLHttpRequest()
+
+        xhr.open("POST", "http://localhost:8080/demo1_war_exploded/disciplina-servlet", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        const data = `disciplina=${modal}&do&stat=${"1"}`;
+
+        xhr.send(data);
+
         var modal = document.getElementById('modal');
         modal.style.display = 'none';
     });
