@@ -5,7 +5,9 @@ import Logic.Afiliado;
 import Logic.Evento;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Updates;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,6 +15,7 @@ import java.util.List;
 import java.util.Random;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.set;
 
 public class DAO_DisciplinaDeportiva {
 
@@ -43,26 +46,22 @@ public class DAO_DisciplinaDeportiva {
         return jsonDocuments;
     }
 
-    public String findId(String id) {
-        Document document = collection.find(eq("_id", id)).first();
-        if (document != null) {
-            return document.getString("id");
-        } else {
-            return null;
-        }
-    }
-    public void updateEventos(String id,ObjectId even){
+    public void updateEventos(String id, ObjectId even) {
         Document document = collection.find(eq("id", id)).first();
         if (document != null) {
-            Document document1 = new Document();
-            List<ObjectId> listaObjectId = (List<ObjectId>) document.get("eventos");
-            listaObjectId.add(even);
-            document1.append("eventos",listaObjectId);
-            Document update = new Document("$set", document1);
 
-            collection.updateOne(document, update);
+            List<ObjectId> listaObjectId = document.getList("eventos", ObjectId.class, new ArrayList<>());
+
+            listaObjectId.add(even);
+
+            Document updateDocument = new Document("eventos", listaObjectId);
+
+            Bson updateOperation = Updates.set("eventos", listaObjectId);
+
+            collection.updateOne(eq("id", id), updateOperation);
         }
     }
+
 
     public String findIdr (ObjectId id){
         Document document = collection.find(eq("_id",id)).first();
@@ -86,34 +85,40 @@ public class DAO_DisciplinaDeportiva {
         return document != null ? document.toJson() : "{}"; // Manejar el caso en que no se encuentre el documento
     }
 
-    public void updateMiembros (String id,ObjectId objId){
-        Document document = collection.find(eq("id",id)).first();
-        Document document1 = new Document();
-        List<ObjectId> listaObjectId = (List<ObjectId>) document.get("miembros");
-        listaObjectId.add(objId);
-        document1.append("miembros",listaObjectId);
-        Document update = new Document("$set", document1);
+    public void updateMiembros(String id, ObjectId objId) {
 
-        collection.updateOne(document, update);
-    }
-
-    public void deleteMiembros (String id,ObjectId objId){
-        Document document = collection.find(eq("id",id)).first();
-        Document document1 = new Document();
-        List<ObjectId> listaObjectId = (List<ObjectId>) document.get("miembros");
-        Iterator<ObjectId> iterator = listaObjectId.iterator();
-        while (iterator.hasNext()) {
-            ObjectId obj = iterator.next();
-            if (obj.equals(objId)) {
-                iterator.remove();
-            }
+        Document document = collection.find(eq("id", id)).first();
+        if (document != null) {
+            List<ObjectId> listaObjectId = document.getList("miembros", ObjectId.class, new ArrayList<>());
+            listaObjectId.add(objId);
+            Document updateDocument = new Document("miembros", listaObjectId);
+            Bson updateOperation = set("miembros", listaObjectId);
+            collection.updateOne(eq("id", id), updateOperation);
+        } else {
+            System.out.println("No se encontró el documento con el ID: " + id);
         }
-        document1.append("miembros",listaObjectId);
-        Document update = new Document("$set", document1);
-
-        collection.updateOne(document, update);
     }
 
+
+    public void deleteMiembros(String id, ObjectId objId) {
+
+        Document document = collection.find(eq("id", id)).first();
+        if (document != null) {
+
+            List<ObjectId> listaObjectId = document.getList("miembros", ObjectId.class, new ArrayList<>());
+
+            listaObjectId.remove(objId);
+
+            Document updateDocument = new Document("miembros", listaObjectId);
+
+            Bson updateOperation = set("miembros", listaObjectId);
+
+            collection.updateOne(eq("id", id), updateOperation);
+        } else {
+
+            System.out.println("No se encontró el documento con el ID: " + id);
+        }
+    }
     public void update(String id, String disciplina, List<ObjectId> miembros, List<Evento> eventos) {
         Document document1 = collection.find(eq("id", id)).first();
 

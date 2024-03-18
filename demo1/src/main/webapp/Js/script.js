@@ -59,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             afiliadosTable.style.display = "table";
             formAfi.style.display = "none";
+            document.getElementById("main-content").style.display="block";
             btnFlotante.style.display = "block";
         });
     });
@@ -87,10 +88,10 @@ document.getElementById("afiliados-link").addEventListener("click", function (ev
         document.getElementById("disciplinas-table").style.display = "none";
         document.getElementById("crearDisciplina").style.display = "none"
         document.getElementById("formEditDisciplina").style.display = "none";
-        document.getElementById("formEditDisciplina").style.display="none";
+        document.getElementById("formEditDisciplina").style.display = "none";
+        document.getElementById("acercaDeFrame").style.display = "none";
     }
 });
-
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -286,7 +287,8 @@ document.querySelector("#disciplinas-link").addEventListener("click", function (
         document.getElementById("crearAfiliado").style.display = "none";
         document.getElementById("afiliados-table").style.display = "none";
         document.getElementById("formEditDisciplina").style.display = "none";
-        document.getElementById("formEditDisciplina").style.display="none";
+        document.getElementById("formEditDisciplina").style.display = "none";
+        document.getElementById("acercaDeFrame").style.display = "none";
         form.style.display = "none";
     }
 });
@@ -312,18 +314,20 @@ document.addEventListener("DOMContentLoaded", function () {
                         const objetoJSON = JSON.parse(disciplina);
 
                         const arraymiem = objetoJSON.miembros
+                        const arrayeven = objetoJSON.eventos
 
-                        traermiembros(arraymiem)
-                            .then((miembros) => {
+                        traermiembros(arraymiem).then((miembros) => {
+                            traermiembros(arrayeven).then((eventos) => {
+                                objetoJSON2 = objetoJSON.eventos
                                 dis.innerHTML += `<tr>
                             <td>${objetoJSON.id}</td>
                             <td>${objetoJSON.disciplina}</td>
                             <td>${miembros}</td>
-                            <td>${objetoJSON.miembros}</td>
+                            <td>${objetoJSON2.nombre+",Puesto:"+objetoJSON2.puesto}</td>
                             <td><button type="button" class="btn btn-outline-primary" id="btnDisciplina">Editar</button></td>
                         </tr>`;
                             })
-
+                        })
                     });
                     dis.addEventListener('click', function (event) {
                         if (event.target && event.target.classList.contains('btnDisciplina')) {
@@ -344,6 +348,35 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.send(null);
     });
 });
+
+function traereventos(arraymiem) {
+    let promesas1 = []; // Array para almacenar todas las promesas de las solicitudes AJAX
+    let miem1 = ''; // Variable para almacenar el resultado final
+
+    arraymiem.forEach((objeto) => {
+        const data = `objectId=${objeto.$oid}`;
+        const promesa = new Promise((resolve, reject) => {
+            realizarSolicitudAjaxEventos(data, (error, response) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    const objetoJSON1 = JSON.parse(response);
+                    resolve(`${objetoJSON1.nombre} ${objetoJSON1.puesto}`);
+                }
+            });
+        });
+        promesas1.push(promesa);
+    });
+
+    return Promise.all(promesas)
+        .then((resultados) => {
+            miem1 = resultados.join('\n');
+            return miem1;
+        })
+        .catch((error) => {
+            console.error('Error en una o más solicitudes AJAX:', error);
+        });
+}
 
 function traermiembros(arraymiem) {
     let promesas = []; // Array para almacenar todas las promesas de las solicitudes AJAX
@@ -367,7 +400,7 @@ function traermiembros(arraymiem) {
     // Esperar a que todas las promesas se resuelvan
     return Promise.all(promesas)
         .then((resultados) => {
-            miem = resultados.join('\n'); // Unir los resultados con saltos de línea
+            miem = resultados.join('\n,'); // Unir los resultados con saltos de línea
             return miem; // Devolver el resultado final
         })
         .catch((error) => {
@@ -394,6 +427,27 @@ function realizarSolicitudAjaxDisciplinas(data, callback) {
         callback('Error de red al realizar la solicitud.', null);
     };
 
+    xhr.send(data);
+}
+
+function realizarSolicitudAjaxEventos(data, callback) {
+    const xhr = new XMLHttpRequest();
+
+    xhr.open("POST", "http://localhost:8080/demo1_war_exploded/evento2-servlet", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            const response = JSON.parse(xhr.responseText);
+            callback(null, response);
+        } else {
+            callback('Error al realizar la solicitud: ' + xhr.statusText, null);
+        }
+    };
+
+    xhr.onerror = function () {
+        callback('Error de red al realizar la solicitud.', null);
+    };
     xhr.send(data);
 }
 
@@ -426,6 +480,7 @@ botonAgregarDisciplina.addEventListener('click', function () {
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
+
     }
 }
 
@@ -437,15 +492,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (event.target && event.target.id === "btnDisciplina") {
             var filaDisciplina = event.target.closest("tr");
             var nombreDisciplina = filaDisciplina.querySelector("td:nth-child(2)").innerText;
+            var idDis = filaDisciplina.querySelector("td:first-child").innerText
 
+            document.getElementById("editIdDisc").value = idDis
             document.getElementById("disciplina").value = nombreDisciplina;
-
             document.getElementById("formEditDisciplina").style.display = "block";
             document.getElementById("disciplinas-table").style.display = "none";
             document.getElementById("crearDisciplina").style.display = "none";
         }
     });
-    document.getElementById('guardarEditDisciplina').addEventListener('click', function() {
+    document.getElementById('guardarEditDisciplina').addEventListener('click', function () {
         const nombreEvento = document.getElementById('eventos').value;
         const puestoEvento = document.getElementById('puesto').value;
 
@@ -455,31 +511,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         xhr.open("POST", "http://localhost:8080/demo1_war_exploded/evento-servlet", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        const data = `nombre=${nombreEvento}&puesto=${puestoEvento}`;
-
+        const data = `&nombre=${nombreEvento}&puesto=${puestoEvento}`;
         xhr.send(data);
 
 
         const xhr1 = new XMLHttpRequest()
 
-        id = document.querySelector("#editIdDisc").value
 
         xhr.open("POST", "http://localhost:8080/demo1_war_exploded/disciplina-servlet", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        const data1 = `id=${id}&evento=${nombreEvento}&stat=${2}`;
-
+        const data1 = `idDisciplina=${id}&evento=${nombreEvento}&stat=${2}`;
+        alert(id)
         xhr.send(data1);
 
-        // Aquí puedes hacer lo que necesites con los datos del evento
         document.getElementById('camposEvento').style.display = 'none';
         document.getElementById('eventos').value = "";
         document.getElementById('puesto').value = "";
         document.getElementById("formEditDisciplina").style.display="none";
-        document.getElementById('disciplinas-table').style.display = 'block';
+        document.getElementById('disciplinas-table').style.display = 'none';
+        document.getElementById("crearDisciplina").style.display="none";
+        document.getElementById("main-content").style.display="block";
         document.getElementById('formEditDisciplina').reset();
     });
 
-    document.getElementById('añadirEvento').addEventListener('click', function() {
+    document.getElementById('añadirEvento').addEventListener('click', function () {
         var camposEvento = document.getElementById('camposEvento');
         if (camposEvento.style.display === 'none' || camposEvento.style.display === '') {
             camposEvento.style.display = 'block';
@@ -487,7 +542,7 @@ document.addEventListener("DOMContentLoaded", function () {
             camposEvento.style.display = 'none';
         }
     });
-    document.getElementById('eliminarDisciplina').addEventListener('click', function() {
+    document.getElementById('eliminarDisciplina').addEventListener('click', function () {
         if (confirm("¿Estás seguro de que deseas eliminar esta disciplina?")) {
             const xhr = new XMLHttpRequest()
 
@@ -499,12 +554,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
             xhr.send(data);
 
-
+            document.getElementById('disciplinas-table').style.display = 'none';
+            document.getElementById("crearDisciplina").style.display="none";
+            document.getElementById("main-content").style.display="block";
             document.getElementById('camposEvento').style.display = 'none';
             document.getElementById('eventos').value = "";
             document.getElementById('puesto').value = "";
             document.getElementById("formEditDisciplina").style.display="none";
-            document.getElementById('disciplinas-table').style.display = 'block';
             document.getElementById('formEditDisciplina').reset();
             alert("Disciplina eliminada exitosamente.");
         } else {
@@ -512,7 +568,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-document.getElementById("acercade-link").addEventListener("click", function() {
+document.getElementById("acercade-link").addEventListener("click", function () {
     var acercaDeFrame = document.getElementById("acercaDeFrame");
 
     acercaDeFrame.style.display = "flex";
@@ -523,10 +579,8 @@ document.getElementById("acercade-link").addEventListener("click", function() {
     document.getElementById("main-content").style.display = "none";
     document.getElementById("crearAfiliado").style.display = "none";
     document.getElementById("crearDisciplina").style.display = "none";
-    document.getElementById("formAfi").style.display="none";
-    document.getElementById("formEditDisciplina").style.display="none";
-    document.getElementById("editForm").style.display="none";
-
-
+    document.getElementById("formAfi").style.display = "none";
+    document.getElementById("formEditDisciplina").style.display = "none";
+    document.getElementById("editForm").style.display = "none";
 
 });

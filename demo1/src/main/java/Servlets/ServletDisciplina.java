@@ -54,6 +54,7 @@ public class ServletDisciplina extends HttpServlet {
                 break;
             case "2":
                 disciplina.updateEventos(id,evento.returnObject(nombreEvento));
+
                 break;
             case "3":
                 disciplina.delete(id);

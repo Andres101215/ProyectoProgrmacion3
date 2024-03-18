@@ -22,7 +22,6 @@ public class ServletEvento extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
-
         Gson gson = new Gson();
 
         if (eventos.Read() != null) {

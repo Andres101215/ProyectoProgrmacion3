@@ -26,6 +26,12 @@ public class DAO_Eventos {
         return document.getObjectId("_id");
     }
 
+    public String returnObject1(String id) {
+        ObjectId objectId = new ObjectId(id);
+        Document document = collection.find(eq("_id", objectId)).first();
+        return document != null ? document.toJson() : "{}";
+    }
+
     public void Create(String id, String nombre, String puesto) {
         Document document = new Document();
         document.append("id", id);
