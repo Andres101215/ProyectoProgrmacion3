@@ -7,6 +7,7 @@ import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -51,6 +52,14 @@ public class DAO_Afiliado {
         return jsonDocuments;
     }
 
+    public ObjectId findDisciplina(String id) {
+        Document document = collection.find(eq("id", id)).first();
+        if (document != null) {
+            return document.getObjectId("Disciplina");
+        } else {
+            return null;
+        }
+    }
     public ObjectId find(String id) {
         Document document = collection.find(eq("id", id)).first();
         if (document != null) {
@@ -79,10 +88,22 @@ public class DAO_Afiliado {
 
         collection.updateOne(document1, update);
     }
-    public void delete(String id){
+
+    public void delete(String id) {
         Document document1 = collection.find(eq("id", id)).first();
         System.out.println("entra al metodo");
 
         collection.deleteOne(document1);
     }
+
+    public String generateId() {
+        String id;
+        Random random = new Random();
+        do {
+            int numeroAleatorio = random.nextInt(90000) + 10000;
+            id = String.valueOf(numeroAleatorio);
+        } while (collection.find(eq("id", id)).first() != null);
+        return id;
+    }
+
 }

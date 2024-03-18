@@ -48,13 +48,18 @@ public class ServletAfiliado extends HttpServlet {
 
          switch (stat){
              case "1":
-                 afiliado.Create(id,nombre,apellido,documento,edad,genero,direccion,telefono,correo,disciplina.find(idDisciplina));
+                 id= afiliado.generateId();
+                 afiliado.Create(id,nombre,apellido,documento,edad,genero,direccion,telefono,correo,disciplina.findObject(idDisciplina));
+                disciplina.updateMiembros(disciplina.findId(idDisciplina),afiliado.find(id));
                  break;
              case "2":
-                 afiliado.update(id,nombre,apellido,documento,edad,genero,direccion,telefono,correo,disciplina.find(idDisciplina));
+                 disciplina.deleteMiembros(disciplina.findIdr(afiliado.findDisciplina(id)),afiliado.find(id));
+                 afiliado.update(id,nombre,apellido,documento,edad,genero,direccion,telefono,correo,disciplina.findObject(idDisciplina));
+                 disciplina.updateMiembros(disciplina.findId(idDisciplina),afiliado.find(id));
                  break;
              case "3":
                  afiliado.delete(id);
+                 disciplina.deleteMiembros(disciplina.findId(idDisciplina),afiliado.find(id));
                  break;
          }
     }

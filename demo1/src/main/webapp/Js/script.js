@@ -86,6 +86,7 @@ document.getElementById("afiliados-link").addEventListener("click", function (ev
         form.style.display = "none";
         document.getElementById("disciplinas-table").style.display = "none";
         document.getElementById("crearDisciplina").style.display = "none"
+        document.getElementById("formEditDisciplina").style.display="none";
     }
 });
 
@@ -263,7 +264,6 @@ document.querySelector("#eliminar").addEventListener("click", () => {
 
         xhr.open("POST", "http://localhost:8080/demo1_war_exploded/afiliado-servlet", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        alert(idAfiliado)
         const data = `id=${idAfiliado}&nombre=${nombre}&apellido=${apellido}&documento=${documento}&edad=${edad}&genero=${genero}&direccion=${direccion}&telefono=${telefono}&correo=${correo}&idDisciplina=${idDisciplina}&stat=${"3"}`;
         xhr.send(data);
     }
@@ -281,6 +281,9 @@ document.querySelector("#disciplinas-link").addEventListener("click", function (
         disciplinastable.style.display = "table";
         crearDisciplina.style.display = "block";
         mainContent.style.display = "none";
+        document.getElementById("crearAfiliado").style.display="none";
+        document.getElementById("afiliados-table").style.display="none";
+        document.getElementById("formEditDisciplina").style.display="none";
         form.style.display = "none";
     }
 });
@@ -301,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const disciplinas = JSON.parse(response);
 
                     disciplinas.forEach(disciplina => {
-                        res = document.querySelector("#dis")
+                        dis = document.querySelector("#dis")
                         dis.innerHTML = '';
                         const objetoJSON = JSON.parse(disciplina);
 
@@ -309,12 +312,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
                         traermiembros(arraymiem)
                             .then((miembros) => {
-                                res.innerHTML += `<tr>
+                                dis.innerHTML += `<tr>
                             <td>${objetoJSON.id}</td>
                             <td>${objetoJSON.disciplina}</td>
                             <td>${miembros}</td>
                             <td>${objetoJSON.miembros}</td>
-                            <td><button type="button" class="btn btn-outline-primary" id="formEdit">Editar</button></td>
+                            <td><button type="button" class="btn btn-outline-primary" id="btnDisciplina">Editar</button></td>
                         </tr>`;
                             })
 
@@ -413,3 +416,70 @@ window.onclick = function (event) {
 
 var botonGuardar = document.getElementById('agregarDisciplina');
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    const editButtons = document.querySelectorAll('#disciplinas-table #btnDisciplina');
+
+    editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const row = button.parentNode.parentNode;
+
+            const id = row.cells[0].innerText;
+            const nombre = row.cells[1].innerText;
+
+            document.getElementById("disciplina").value = nombre;
+
+            document.getElementById("formEditDisciplina").style.display = "block";
+            document.getElementById("disciplinas-table").style.display = "none";
+            document.getElementById("crearDisciplina").style.display = "none";
+        });
+    });
+
+    document.getElementById('guardarEditDisciplina').addEventListener('click', function() {
+        const nombreEvento = document.getElementById('eventos').value;
+        const puestoEvento = document.getElementById('puesto').value;
+
+        // Aquí puedes hacer lo que necesites con los datos del evento
+        document.getElementById('camposEvento').style.display = 'none';
+        document.getElementById('eventos').value = "";
+        document.getElementById('puesto').value = "";
+        document.getElementById("formEditDisciplina").style.display="none";
+        document.getElementById('disciplinas-table').style.display = 'block';
+        document.getElementById('formEditDisciplina').reset();
+    });
+
+    document.getElementById('añadirEvento').addEventListener('click', function() {
+        var camposEvento = document.getElementById('camposEvento');
+        if (camposEvento.style.display === 'none' || camposEvento.style.display === '') {
+            camposEvento.style.display = 'block';
+        } else {
+            camposEvento.style.display = 'none';
+        }
+    });
+
+    document.getElementById('eliminarDisciplina').addEventListener('click', function() {
+        if (confirm("¿Estás seguro de que deseas eliminar esta disciplina?")) {
+            const xhr = new XMLHttpRequest()
+
+            id=document.querySelector("#editIdDisc").value
+
+            xhr.open("POST", "http://localhost:8080/demo1_war_exploded/disciplina-servlet", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            const data = `idDisciplina=${id}&do&stat=${"3"}`;
+
+            xhr.send(data);
+
+            // Aquí puedes agregar la lógica para eliminar la disciplina
+
+            document.getElementById('camposEvento').style.display = 'none';
+            document.getElementById('eventos').value = "";
+            document.getElementById('puesto').value = "";
+            document.getElementById("formEditDisciplina").style.display="none";
+            document.getElementById('disciplinas-table').style.display = 'block';
+            document.getElementById('formEditDisciplina').reset();
+            alert("Disciplina eliminada exitosamente.");
+        } else {
+            alert("Eliminación cancelada.");
+        }
+    });
+});

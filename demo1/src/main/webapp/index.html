@@ -32,14 +32,15 @@
 
     </main>
 
-        <img id="marca" src="sportslogo.png" alt="Marca de Agua"></img>
+    <img id="marca" src="sportslogo.png" alt="Marca de Agua"></img>
 
 
     <div class="table-responsive">
-        <table class="table" id="afiliados-table" style="display: none; margin-top: 10%" >
+        <table class="table" id="afiliados-table" style="display: none; margin-top: 10%">
             <thead>
             <tr>
-                <th colspan="11"><b>Tabla Afiliados</b></th></tr>
+                <th colspan="11"><b>Tabla Afiliados</b></th>
+            </tr>
             <tr>
                 <th scope="col"><b>ID</b></th>
                 <th scope="col"><b>Nombre</b></th>
@@ -143,7 +144,8 @@
                 <label for="nombre" class="col-form-label">Nombre</label>
             </div>
             <div class="col-lg-5 ">
-                <input type="text" id="editNombre" class="form-control" placeholder="Ingrese el nombre" required> </input>
+                <input type="text" id="editNombre" class="form-control" placeholder="Ingrese el nombre"
+                       required> </input>
             </div>
             <div class="invalid-feedback">
                 Por favor, completa este campo.
@@ -226,17 +228,18 @@
             <div class="col-lg-12">
                 <div class="d-flex justify-content-between align-items-center">
                     <input type="submit" id="actualizar" class="btn btn-primary" value="Actualizar">
-                    <input type="submit" id="eliminar" class="btn btn-outline-danger formDelete" value="Eliminar Afiliado">
+                    <input type="submit" id="eliminar" class="btn btn-outline-danger formDelete"
+                           value="Eliminar Afiliado">
                 </div>
             </div>
         </form>
     </div>
 
     <div class="table-responsive">
-        <table class="table" id="disciplinas-table" style="margin-top: 10% ">
+        <table class="table" id="disciplinas-table" style="margin-top: 10%; display: none ">
             <thead>
             <tr>
-                <th colspan="4" class="text-center"><b>Tabla Disciplinas</b></th>
+                <th colspan="5" class="text-center"><b>Tabla Disciplinas</b></th>
             </tr>
             <tr>
                 <th scope="col">Id</th>
@@ -265,7 +268,8 @@
                         <label for="nombre" class="col-form-label">Nombre de la Disciplina</label>
                     </div>
                     <div class="col-lg-5 ">
-                        <input type="text" id="NombreDisciplina" class="form-control" placeholder="Ingrese el nombre" required>
+                        <input type="text" id="NombreDisciplina" class="form-control" placeholder="Ingrese el nombre"
+                               required>
                     </div>
                     <div class="invalid-feedback">
                         Por favor, completa este campo.
@@ -276,7 +280,44 @@
             </div>
         </div>
     </div>
+    <div id="formEditDisciplina" style="display: none">
+        <h1 class="md-4">Editar Disciplina</h1>
+        <form class="row g-3 needs-validation">
+            <div class="col-lg-1">
+                <label for="disciplina" class="col-form-label">Nombre:</label>
+            </div>
+            <div class="col-lg-12">
+                <input type="text" id="disciplina" class="form-control" placeholder="Ingrese el nombre" required>
+            </div>
+            <div class="col-lg-12">
+                <button id="añadirEvento" class="btn btn-primary">Añadir Evento</button>
+            </div>
+            <div id="camposEvento" style="display: none;">
+                <div class="col-lg-3">
+                    <label for="nombre" class="col-form-label">Nombre del evento:</label>
+                </div>
+                <div class="col-lg-12">
+                    <input type="text" id="eventos" class="form-control" required>
+                </div>
+                <div class="col-lg-1">
+                    <label for="puesto" class="col-form-label">Puesto:</label>
+                </div>
+                <div class="col-lg-12">
+                    <input type="number" id="puesto" class="form-control" required>
+                </div>
+            </div>
 
+        </form>
+        <br>
+        <div class="col-lg-12">
+            <input type="text" id="editIdDisc" class="form-control" style="display:none;"> </input>
+        </div>
+        <div class="col-lg-12">
+            <input type="submit" id="guardarEditDisciplina" class="btn btn-primary">
+            <button id="eliminarDisciplina" class="btn btn-danger">Eliminar Disciplina</button>
+
+        </div>
+    </div>
 </div>
 
 

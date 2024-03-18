@@ -44,6 +44,7 @@ public class ServletDisciplina extends HttpServlet {
 
         switch (stat){
             case "1":
+                id=disciplina.generateId();
                 disciplina.Create(id,nombre,new ArrayList<ObjectId>(),new ArrayList<Evento>());
                 break;
             case "2":

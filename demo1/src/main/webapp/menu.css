@@ -269,3 +269,9 @@ nav ul li a:hover::after {
 #formDisciplina {
     text-align: center;
 }
+
+#formEditDisciplina{
+    margin-top: 10%;
+    display: none;
+    animation: slideDown 1s ease forwards;
+}
